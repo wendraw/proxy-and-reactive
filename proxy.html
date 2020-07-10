@@ -1,0 +1,26 @@
+<script>
+    let object = {
+        a: 1,
+        b: 2
+    }
+    let proxy = new Proxy(object, {
+        get(obj, prop) {
+            console.log(obj, prop)
+            return obj[prop];
+        },
+        defineProperty(obj, prop, desc) {
+            console.log(arguments);
+            return Object.defineProperty(obj, prop, desc);
+        }
+    })
+
+    // 这个就是调用 get
+    proxy.a;
+
+    // 使用 set，是一个默认行为
+    proxy.a = 11;
+
+    // 使用 defineProperty
+    Object.defineProperty(proxy, "b", {value: 22});
+    console.log(object); // {a: 11, b: 22}
+</script>
